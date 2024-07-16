@@ -1,7 +1,13 @@
-from models.backbone import Bottleneck
+from models.backbone import ResNet50
+import torch
 
-test_bottleneck = Bottleneck(
-    64, 64, 1
-)
+model = ResNet50()
 
-print(test_bottleneck)
+x = torch.rand([1, 3, 300, 300])
+
+
+print(model.forward(x).size())
+
+# from torchvision.models import resnet50
+# model = resnet50()
+# print(model)
