@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-from typing import Optional, Callable, Type
+from typing import Optional, Callable
 
 
 class Bottleneck(nn.Module):
@@ -179,9 +179,13 @@ class ResNet50(nn.Module):
         self.layer3 = self._make_layer(256, layers[2])
         self.layer4 = self._make_layer(512, layers[3])
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        # Classification head
+        # 3 - Classification head
         self.fc = nn.Linear(512 * 4, num_classes)
         
+        # Initialization
+        # Kaiming Normal Initialization: This initialization method, also known as He initialization, is used to 
+        # initialize the weights of the convolutional layers. It is designed to keep the variance of the activations 
+        # consistent across layers, which helps with training deep networks.
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, mode="fan_out", nonlinearity="relu")
